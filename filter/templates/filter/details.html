@@ -1,0 +1,125 @@
+<html>
+
+<head>
+	{% load static %}
+	<link rel='stylesheet' type='text/css' href='{% static "filter/styles.css" %}'>
+</head>
+<div class="sticky">
+        <div class="navbar">
+            <a href="/filter">Home</a>
+            <a href="filter">Filter</a>
+        </div>
+</div>
+
+<div class="mainB">
+	<center>
+		<div class="text">@{{ user.screen_name }}</div>
+		<div class="text">Created at: {{ tweet.created_at }}</div>
+		<div class='infoTag'>TWEET</div>
+		<div class="text">{{ tweet.text }}</div>
+	</center>
+
+	<table style="width:100%; padding-top:10px;">
+		<tr>
+			<td>
+				<center>
+					<div class='infoTag'>IMAGE</div>
+				</center>
+				<br>
+			</td>
+			<td colspan="2">
+				<center>
+					<div class='infoTag'>MAP</div>
+				</center>
+				<br>
+			</td>
+		</tr>
+		<tr style="height:420px">
+			<td>
+				<center>
+					<img id='img' src="{{ tweet.image_url }}" onerror='this.src = "{% static "filter/No_image_available.svg" %}"' style='max-height: 400px;max-width: 400px;'>
+				</center>
+			</td>
+			<td style="color:rgb(252, 206, 0)">
+				<center>
+					<div class='text'>{{ tweet.latitude }}, {{ tweet.longitude }}</div>
+					<div class='text' id='physAddress'></div>
+					<div id="map" style="width:400px;height:400px;background:rgb(252, 206, 0)"></div>
+				</center>
+			</td>
+			<td>
+				<center>
+						<div id="street" style="width:400px;height:400px;background:rgb(252, 206, 0)"></div>
+				</center>				
+			</td>
+		</tr>
+	</table>
+
+	<script>
+		function initialize() {
+
+        var fenway = {lat: ({{ tweet.latitude }}), lng: ({{ tweet.longitude }})};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: fenway,
+          zoom: 14
+        });
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('street'), {
+              position: fenway,
+              pov: {
+                heading: 34,
+                pitch: 10
+              }
+            });
+        map.setStreetView(panorama);
+      }
+		function myMap() {
+			// initialize();
+			var myLatLng = {
+				lat: ({{ tweet.latitude }}),
+				lng: ({{ tweet.longitude }})
+				};
+			// Get the map and put the mark the GeoLocation
+			var mapOptions = {center: myLatLng, zoom: 15, mapTypeId: 'terrain',};
+			var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+			var marker = new google.maps.Marker({ position: myLatLng, map: map, });
+
+			// Get the street view
+			var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('street'), {
+				position: myLatLng,
+				pov: {
+					heading: 34,
+					pitch: 10
+				}
+				});
+			map.setStreetView(panorama);
+
+			// Get the physical address
+			var geocoder = new google.maps.Geocoder();
+			if (geocoder) {
+			geocoder.geocode({ 'latLng': myLatLng }, function (results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						document.getElementById("physAddress").innerHTML = results[0].formatted_address;
+					}
+					else {
+						console.log("Geocoding failed: " + status);
+					}
+				});
+			}
+		}
+		function showHideImage(elementId) {
+			var x = document.getElementById(elementId);
+			if (x.style.display === "none") {
+				x.style.display = "block";
+			} else {
+				x.style.display = "none";
+			}
+		}
+		
+	</script>
+	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3O8t_yVrxCQBbxKaQy4otd2whqppmNSM&callback=myMap"></script>
+</div>
+
+</html>

@@ -1,0 +1,152 @@
+<html onload='pageLoad()'>
+
+<head>
+	{% load static %}
+	<link rel='stylesheet' type='text/css' href='{% static "filter/styles.css" %}'>
+    <script type="text/javascript" src="{% static "filter/pureknob.js" %}"></script>
+    <script type="text/javascript" src="{% static "filter/scripts.js" %}"></script>
+</head>
+<div class="sticky">
+        <div class="navbar">
+            <a href="/filter">Home</a>
+            <a href="filter">Filter</a>
+            <a href="#" onclick="showHideKnob()" style="float: right;">Show/Hide Knobs</a>
+        </div>
+        <center>
+            <div id='knobs' class='knobsTable'>
+                <table>
+                    <tr>
+                        <th><div class='text' style='color:ff8800'>GIS</div></th>
+                        <th><div class='text' style='color:ff8800'>Image</div></th>
+                        <th><div class='text' style='color:ff8800'>Text</div></th>
+                        <th><div class='text' style='color:ff8800'>User</div></th>
+                    </tr>
+                    <tr>
+                        <td id='gisKnob'></td>
+                        <td id='imageKnob'></td>
+                        <td id='textKnob'></td>
+                        <td id='userKnob'></td>
+                    </tr>
+                </table>
+                <button class='btn' onclick="apply()"  style='background-color:ff8800'>Apply</button>
+            </div>
+        </center>
+</div>
+<script>
+    function pageLoad()
+    {
+        
+    }
+
+    function apply()
+    {
+        
+    }
+
+    function showHide(elementId) {
+        var x = document.getElementById(elementId);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    function showHideKnob() {
+			showHide('knobs');
+            var x = document.getElementById('knobs');
+            var y = document.getElementById('mainContent');
+            if(x.style.display === "none")
+            {
+                y.style.marginTop = '50px';
+            }
+            else
+            {
+                y.style.marginTop = '310px';                
+            }
+		}
+    
+</script>
+<div id='mainContent' class='mainA'>
+    <script>
+        var dimVal = 100;
+        var elem = document.getElementById('gisKnob');
+        var myKnob = pureknob.createKnob(dimVal, dimVal);
+        var v = getCookie('gisVal');
+        if(v === "")
+        {
+            setCookie(v, 50, 365);
+            myKnob.setValue(50);
+        }
+        else
+            myKnob.setValue(parseInt(v));
+        var node = myKnob.node();
+        elem.appendChild(node);
+        var listener = function(myKnob, value) {
+            setCookie('gisVal', value, 365);
+        };
+        myKnob.addListener(listener);
+
+        elem = document.getElementById('imageKnob');
+        var myKnob = pureknob.createKnob(dimVal, dimVal);
+        var v = getCookie('imageVal');
+        if(v === "")
+        {
+            setCookie(v, 50, 365);
+            myKnob.setValue(50);
+        }
+        else
+            myKnob.setValue(parseInt(v));
+        var node = myKnob.node();
+        elem.appendChild(node);
+        var listener = function(myKnob, value) {
+            setCookie('imageVal', value, 365);
+        };
+        myKnob.addListener(listener);
+
+        elem = document.getElementById('textKnob');
+        var myKnob = pureknob.createKnob(dimVal, dimVal);
+        var v = getCookie('textVal');
+        if(v === "")
+        {
+            setCookie(v, 50, 365);
+            myKnob.setValue(50);
+        }
+        else
+            myKnob.setValue(parseInt(v));
+        var node = myKnob.node();
+        elem.appendChild(node);
+        var listener = function(myKnob, value) {
+            setCookie('textVal', value, 365);
+        };
+        myKnob.addListener(listener);
+
+        elem = document.getElementById('userKnob');
+        var myKnob = pureknob.createKnob(dimVal, dimVal);
+        var v = getCookie('userVal');
+        if(v === "")
+        {
+            setCookie(v, 50, 365);
+            myKnob.setValue(50);
+        }
+        else
+            myKnob.setValue(parseInt(v));
+        var node = myKnob.node();
+        elem.appendChild(node);
+        var listener = function(myKnob, value) {
+            setCookie('userVal', value, 365);
+        };
+        myKnob.addListener(listener);
+    </script>
+	{% if allTweets %} {% for tweet in allTweets %}
+	<!-- <div class="tweet-number">Tweet ID: {{ tweet.tweetID }}</div>	 -->
+	<div class="tweetID">
+		<a class="tweet-number" href='{{ tweet.tweet_id}}'>{{ tweet.tweet_id }}</a>
+		<br>
+	</div>
+	{% endfor %} {% else %}
+	<h1>No Tweets in DB</h1>
+	{% endif %}
+</div>
+
+</html>

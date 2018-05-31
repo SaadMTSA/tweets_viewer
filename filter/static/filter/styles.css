@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+
+* {
+	/* font-family: 'Do Hyeon', sans-serif; */
+	font-family: 'Noto Sans', sans-serif;
+}
+/* The navigation bar */
+.sticky {
+overflow: hidden;
+position: fixed; /* Set the navbar to fixed position */
+top: 0; /* Position the navbar at the top of the page */
+width: 100%; /* Full width */
+}
+.navbar {
+overflow: hidden;
+background-color: rgb(252, 206, 0);
+width: 100%; /* Full width */
+}
+/* Links inside the navbar */
+.navbar a {
+float: left;
+display: block;
+color: black;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+.knobsTable{
+padding-top: 10px;
+background-color: rgb(94, 75, 0);
+clear:both;
+}
+/* Change background on mouse-over */
+.navbar a:hover {
+background: #ddd;
+color: black;
+}
+
+/* Main content */
+.mainA {
+margin-top: 310px; /* Add a top margin to avoid content overlay */
+}
+
+.mainB {
+	margin-top: 100px; /* Add a top margin to avoid content overlay */
+	}
+body {
+padding: 10px 10px 10px 0;
+background:rgb(30, 30, 30);
+}
+
+.infoTag {
+background-color: rgb(252, 206, 0);
+border: none;
+display: inline-block;
+padding: 10px 10px 10px 10px;
+margin: 20px 4px 4px 4px;
+color: rgb(0, 0, 0);
+font-size: 20px;
+}
+
+.btn {
+background-color: rgb(252, 206, 0);
+border: none;
+display: inline-block;
+padding: 10px 10px 10px 10px;
+margin: 10px 10px 10px 10px;
+color: rgb(0, 0, 0);
+font-size: 20px;
+}
+
+.text {
+padding: 4px 4px 4px 4px;
+clear: both;
+font-size: 20px;
+color: rgb(252, 206, 0);
+}
+.tweetID a { 
+color: rgb(252, 206, 0);
+text-decoration: none; 
+}
+.tweetID a:hover { 
+text-decoration: underline; 
+}
